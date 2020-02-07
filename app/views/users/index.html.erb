@@ -1,0 +1,52 @@
+<br><br>
+<table border="1"> 
+  <thead>
+    <tr>
+      <th>S.no</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Mobile number</th>
+      <th>Batch</th>
+      <th>Degree</th>
+      <th>Register number</th>
+      <th>email</th>
+      <th>Role</th>
+      <th>Activate</th>
+      <th>Promote as admin</th>
+      <th>Delete</th>
+      <th>Details</th>
+      
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% s_no=1%>
+    <% @user.each do |user| %>
+    
+      <tr>
+        <td><%= s_no %></td><%s_no+=1%>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.mobile_number %></td>
+        <td><%= user.batch %></td>
+        <td><%= user.degree %></td>
+        <td><%= user.register_number %></td>
+        <td><%= user.email %></td>
+        <td><%= user.title %></td>
+        <% if user.admin? %>
+           <td> - </td>
+           <td><%= current_user == user ? "-" : (link_to 'Revoke', promote_user_path(user.id), method: :post ) %></td>
+        <% else %>
+        	<td><%= link_to "#{user.active? ? 'Deactivate' : 'Activate' }", activate_user_path(user.id), method: :post %></td>
+          <td><%= link_to 'Promote', promote_user_path(user.id), method: :post if current_user.admin? %></td>
+        <% end %>
+        <td><%= link_to 'Delete', user_path(user.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'View' , user_path(user.id) %></td>
+     <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', root_path %>
+
+
