@@ -1,0 +1,34 @@
+<%= link_to 'New', new_question_path %><br><br>
+
+
+<table border="1"> 
+  <thead>
+    <tr>
+      <th>S.no</th>
+      <th>Question</th>
+      <th>Created By</th>
+      <th>View</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% s_no=1%>
+    <% @question.each do |question| %>
+    
+      <tr>
+        <td><%= s_no %></td><%s_no+=1%>
+        <td><%= question.question %></td>
+        <td><%= question.user.first_name %></td>
+        <td><%= link_to 'View' %></td>
+        <% if current_user.id == question.user_id %>
+          <td><%= link_to 'Update', edit_question_path(question.id)%></td>
+          <td><%= link_to 'Delete'%></td>
+        <% else %>
+          <td>-</td>
+          <td>-</td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>

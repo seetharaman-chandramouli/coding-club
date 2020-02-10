@@ -6,13 +6,13 @@
   <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
 </head>
 <style>
 li {
   display: inline;
-  padding: 60px;
+  padding: 40px;
 }
+
 </style>
 <body>
 <%flash.each do |key,value|%>
@@ -20,21 +20,27 @@ li {
 		<%=value%>
 	</div>
 <%end%>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
 <ul>
 <li>BROGRAMMERS</li>
 <% if current_user && current_user.active %>
 	<li><%= "#{current_user.title}:" " #{current_user.full_name}" %>!</li>
 	<li><%= link_to 'Home', root_path %></li>
 	<li><%= link_to 'Manage users', users_path if current_user.admin? %></li>
-	<li><%= link_to 'Blogs'  %></li>
+	<li ><%= link_to 'Blogs', questions_path %></li>
 	<li><%= link_to 'Profile', edit_user_path(current_user.id)%></li>
+	<li><%= link_to 'Following'%></li>
+	<li><%= link_to 'Followers'%></li>
 	<li><%= link_to 'Logout', logout_path, method: :delete %></li>
 <% else %>
 	<li><%= link_to 'Home', root_path %></li>
 	<li><%= link_to 'Login', login_path%></li> 
-	<li><%= link_to 'Sign up now',new_user_path %></li>
+	<li ><%= link_to 'Sign up now',new_user_path %></li>
 <% end %>
 </ul>
+</div>
+</nav>
 
 <%= yield %>
 

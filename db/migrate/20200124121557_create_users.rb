@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration
     	t.string :batch, null: false
     	t.string :degree, null: false
     	t.string :college_name, null: false
-    	t.bigint :register_number, null: false
+    	t.string :register_number, null: false
     	t.string :company_name
     	t.string :designation
     	t.string :location
