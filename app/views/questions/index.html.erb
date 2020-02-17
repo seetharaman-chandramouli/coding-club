@@ -1,13 +1,13 @@
-<%= link_to 'New', new_question_path %><br><br>
 
 
-<table border="1"> 
-  <thead>
+<% if @question.present? %>
+  <h2 style="text-align: center;"> QUESTIONS </h2>
+<table class="table table-borderless table-hover">
+  <thead class="thead-dark">
     <tr>
       <th>S.no</th>
       <th>Question</th>
       <th>Created By</th>
-      <th>View</th>
       <th>Update</th>
       <th>Delete</th>
     </tr>
@@ -18,12 +18,11 @@
     
       <tr>
         <td><%= s_no %></td><%s_no+=1%>
-        <td><%= question.question %></td>
-        <td><%= question.user.first_name %></td>
-        <td><%= link_to 'View' %></td>
-        <% if current_user.id == question.user_id %>
-          <td><%= link_to 'Update', edit_question_path(question.id)%></td>
-          <td><%= link_to 'Delete'%></td>
+        <td><b><%= link_to "#{question.question}" , question_path(question.id), class: "no-decoration" %></b></td>
+        <td><%= question.user.full_name %></td>
+        <% if question.author?(current_user) %>
+          <td><%= link_to 'Update', edit_question_path(question.id), class:"btn btn-warning"%></td>
+          <td><%= link_to 'Delete', question_path(question.id), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% else %>
           <td>-</td>
           <td>-</td>
@@ -32,3 +31,7 @@
       <% end %>
     </tbody>
   </table>
+  <% end %>
+<h3><%= link_to 'New', new_question_path, class:"btn btn-warning" %></h3>
+<h3><%= link_to 'Back', root_path, class:"btn btn-light" %></h3>
+

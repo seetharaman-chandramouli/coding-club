@@ -1,52 +1,56 @@
 <br><br>
-<table border="1"> 
-  <thead>
+<div >
+<% if @user.present? %>
+ <table class="table table-borderless table-hover">
+  <thead class="thead-dark">
     <tr>
-      <th>S.no</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Mobile number</th>
+      
+      <th>Name</th>
       <th>Batch</th>
       <th>Degree</th>
       <th>Register number</th>
-      <th>email</th>
-      <th>Role</th>
-      <th>Activate</th>
-      <th>Promote as admin</th>
-      <th>Delete</th>
-      <th>Details</th>
+      <th>Email</th>
       
 
+      <% if current_user.admin? %>
+      <th>Role</th>
+      <th>Delete</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% s_no=1%>
-    <% @user.each do |user| %>
     
+    <% @user.each do |user| %> 
       <tr>
-        <td><%= s_no %></td><%s_no+=1%>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.mobile_number %></td>
+        
+        <td><b><%= link_to "#{user.full_name}" , user_path(user.id), class: "no-decoration" %></b></td>
         <td><%= user.batch %></td>
         <td><%= user.degree %></td>
         <td><%= user.register_number %></td>
         <td><%= user.email %></td>
-        <td><%= user.title %></td>
-        <% if user.admin? %>
-           <td> - </td>
-           <td><%= current_user == user ? "-" : (link_to 'Revoke', promote_user_path(user.id), method: :post ) %></td>
-        <% else %>
-        	<td><%= link_to "#{user.active? ? 'Deactivate' : 'Activate' }", activate_user_path(user.id), method: :post %></td>
-          <td><%= link_to 'Promote', promote_user_path(user.id), method: :post if current_user.admin? %></td>
-        <% end %>
-        <td><%= link_to 'Delete', user_path(user.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <td><%= link_to 'View' , user_path(user.id) %></td>
+       
+        <% if current_user.admin? %>
+          <td><div class="badge badge-<%= user.admin? ? 'primary' : 'warning'  %>"><%= user.title %></div> <div class="badge badge-<%= user.active? ? 'success' : 'danger'  %>"><%= user.status %></div></td>
+          <% if user.admin? %>
+              <% if current_user == user %>
+                <td>-</td>
+              <% else %>
+                <td><%= link_to 'Delete', user_path(user.id), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' }%></td>
+              <% end %>
+          <% else %>
+            <td><%= link_to 'Delete', user_path(user.id),class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %> 
+      </tr>
      <% end %>
   </tbody>
 </table>
+<% end %>
 
-<%= link_to 'Back', root_path %>
+
+<h3><%= link_to 'Back', root_path, class:"btn btn-light" %></h3>
+
+</div>
 
 

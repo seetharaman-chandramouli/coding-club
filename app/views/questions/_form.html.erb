@@ -1,3 +1,9 @@
+<% if @question.question.present? %>
+<center>
+	<b>Question : </b><%= @question.question %><br>
+	<b>Question created by :</b> <%= @question.user.full_name %></center>
+<% end %>
+
 <div class="row">
 	<div class="col-sm-12">
 		<%= form_for(@question)  do |f| %>
@@ -17,3 +23,5 @@
 		<%end%>
 	</div>
 </div>
+
+<h3 style="text-align: center;"><%= link_to 'Back', questions_path, class:"btn btn-light" %></h3>

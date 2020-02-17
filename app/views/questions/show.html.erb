@@ -1,0 +1,49 @@
+
+<h2 style="text-align: center;"> ANSWERS </h2>
+<b>Question : </b><%= @question.question %><br>
+<b>Question created by :</b> <%= @question.user.full_name %><br><br>
+
+<% if @answer.present? %>
+<table class="table table-borderless table-hover"> 
+  <thead class="thead-dark">
+    <tr>
+      <th>S.no</th>
+      <th>Answers</th>
+      <th>Posted By</th>
+      <th>Update</th>
+      <th>Delete</th>
+      <th>Like / Unlike</th>
+      <th>Vote count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% s_no=1%>
+    <% @answer.each do |answer| %>
+      <tr>
+
+        <td><%= s_no %></td><%s_no+=1%>
+        <td><%= answer.answer %></td>
+        <td><%= answer.user.full_name %></td>
+        <% if answer.author?(current_user)   %>
+            <td><%= link_to 'Update', edit_question_answer_path(@question.id,answer.id), class:"btn btn-warning"%></td>
+            <td><%= link_to 'Delete', question_answer_path(@question.id,answer.id), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+            <td>-</td>
+            <td>-</td>
+        <% end %>
+        <% if answer.voted?(current_user) %>
+          <td><%= link_to 'Unlike', answer_toggle_like_path(answer.id), class:"btn btn-light", method: :post %>
+          </td>
+        <% else %>
+          <td><%= link_to 'Like', answer_toggle_like_path(answer.id), class:"btn btn-dark", method: :post %></td>
+        <% end %>
+        
+        <td><%= answer.vote_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% end %>
+<%= link_to 'post answer', new_question_answer_path(@question.id), class:"btn btn-warning"%><br>
+<%= link_to 'Back', questions_path, class:"btn btn-light"%>
