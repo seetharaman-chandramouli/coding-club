@@ -1,0 +1,8 @@
+  
+* text=auto
+*.css linguist-vendored
+*.scss linguist-vendored
+*.js linguist-vendored
+*.rb linguist-vendored
+*.erb linguist-vendored
+CHANGELOG.md export-ignore
