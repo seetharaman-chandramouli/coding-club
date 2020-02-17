@@ -1,0 +1,48 @@
+
+form { 
+	margin-left: 33%;
+	width:900px;
+};
+.field_with_errors{
+	input{
+		border-color: red;
+	}
+}
+
+.no-decoration:hover{
+	text-decoration: none;
+}
+.nav-color{
+	color:white;
+
+}
+.nav-color:hover{
+	color: yellow;
+	text-decoration: none;
+}
+.navbar-nav{
+	line-height: 40px;
+	li{
+	margin-left: 60px; 
+	}
+}
+.img-align{
+	margin-top: 21%;
+}
+.jumbotron{
+
+    height: 35%;
+    width: 70%;
+    margin-top: 10px;
+    border-radius: 30px;
+    position: fixed;
+}
+
+
+
+.button-inline
+{
+	h3{
+	display : inline-block
+	}
+}

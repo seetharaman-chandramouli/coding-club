@@ -1,0 +1,27 @@
+<% if @question.question.present? %>
+<center>
+	<b>Question : </b><%= @question.question %><br>
+	<b>Question created by :</b> <%= @question.user.full_name %></center>
+<% end %>
+
+<div class="row">
+	<div class="col-sm-12">
+		<%= form_for(@question)  do |f| %>
+			<div class="form-group">
+				<div class="control-label col-sm-2">
+					<%= f.label :question %>
+				</div>
+				<div class="col-sm-8">
+					<%= f.text_field :question, class: "form-control", placeholder: "question", autofocus: true %>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-8 col-sm-offset-2">
+					<%= f.submit %>
+				</div>
+			</div>
+		<%end%>
+	</div>
+</div>
+
+<h3 style="text-align: center;"><%= link_to 'Back', questions_path, class:"btn btn-light" %></h3>

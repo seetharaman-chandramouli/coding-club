@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 
+	skip_before_action :verify_logged_in, except: [:destroy]
 	def new
 	end
 
@@ -13,16 +14,12 @@ class SessionsController < ApplicationController
 				redirect_to root_path, danger: "Account not activated"
 			end
 		else
-			redirect_to root_path, danger: "Invalid email or password"
-		end
-
-		
+			redirect_to login_path, danger: "Invalid email or password"
+		end		
 	end
 
 	def destroy
 		session[:user_id] = nil
 		redirect_to root_path, success: "logged out successfully"
 	end
-
-
 end

@@ -1,3 +1,4 @@
+<div class="float-left">
 <h2><b>First name</b> : <%= @user.first_name %></h2>
 <h2><b>Last name</b> : <%= @user.last_name %></h2>
 <h2><b>Mobile number</b> : <%= @user.mobile_number %></h2>
@@ -10,11 +11,44 @@
 <h2><b>Designation</b> : <%= @user.designation %></h2>
 <h2><b>Location</b> : <%= @user.location %></h2>
 <h2><b>Email</b> : <%= @user.email %></h2>
-<% if @user.admin? %>
-        <h2><%= current_user == @user ? "-" : (link_to 'Revoke', promote_show_user_path(@user.id), method: :post ) %></h2>
-<% else %>
-        <h2><%= link_to "#{@user.active? ? 'Deactivate' : 'Activate' }", activate_show_user_path(@user.id), method: :post %></h2>
-        <h2><%= link_to 'Promote', promote_show_user_path(@user.id), method: :post if current_user.admin? %></h2>
+
+<% if current_user.admin? %>
+
+	
+
+	<div class="button-inline">
+	<% if @user.admin? %>
+			<h3>
+	        <%= link_to 'Revoke', toggle_promotion_user_path(id: @user.id),class:"btn btn-danger", method: :post unless current_user == @user %></h3>
+	<% else %>
+			<h3><% user_status = @user.active? ? ['Deactivate', 'danger'] : ['Activate', "success"] %>
+	        	<%= link_to "#{user_status[0]}", toggle_activation_user_path(id: @user.id),  method: :post, class: "btn btn-#{user_status[1]}" %></h3>
+	   
+	        <h3><%= link_to 'Promote', toggle_promotion_user_path(id: @user.id),class:"btn btn-success", method: :post if current_user.admin? %></h3>
+	<% end %>
+	 <h3><%= link_to 'Delete', user_path(@user.id),class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } unless current_user == @user %></h3>
+
 <% end %>
-<h2><%= link_to 'Delete', user_path(@user.id), method: :delete, data: { confirm: 'Are you sure?' } %></h2>
-<h2><%= link_to 'Back', users_path %>
+<% unless current_user == @user %>
+	<% if current_user.followings.find_by(id: @user) %>
+	    <h3><%= link_to 'Unfollow', toggle_follow_user_path(@user.id),class:"btn btn-danger", method: :post %></h3>
+	<% else %>
+		<h3><%= link_to 'Follow', toggle_follow_user_path(@user.id),class:"btn btn-success", method: :post %></h3>
+	<% end %>
+<% end %>
+
+<h3><%= link_to 'Back', users_path, class:"btn btn-light" %></h3>
+
+</div>
+</div>
+
+
+
+<div class="float-right" style="margin-right: 40%">
+<%= render partial: "following" %>
+<%= render partial: "follower" %>
+</div>
+
+
+
+

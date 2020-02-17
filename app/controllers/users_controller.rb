@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 
-before_action :load_user, only: [:update, :activate, :activate_show, :destroy]
+skip_before_action :verify_logged_in, only: [:new, :create]
+before_action :load_user, only: [:update, :toggle_activation, :destroy, :toggle_promotion, :show, :profile_view]
 
 	def new
 		@user = User.new
@@ -8,16 +9,17 @@ before_action :load_user, only: [:update, :activate, :activate_show, :destroy]
 
 	def create
 		@user = User.new(user_params)
-			if @user.save
-				redirect_to root_path, success: "Account created successfully, wait till it gets activated"
-			else
-				redirect_to new_user_path, danger: "Mail id already taken"
-				#render :partial => 'failure', danger: "Mail id already taken"
-			end
+		if @user.save
+			redirect_to root_path, success: "Account created successfully, wait till it gets activated"
+		else
+			flash[:danger] = "check fields"
+			render :new  
+
+		end
 	end
 
 	def edit
-		if session[:user_id] == params[:id].to_i
+		if current_user.id == params[:id].to_i
 			load_user
 		else
 			redirect_to root_path, danger: "User not found"
@@ -25,7 +27,6 @@ before_action :load_user, only: [:update, :activate, :activate_show, :destroy]
 	end
 
 	def update
-		#@user = User.find_by(id: params[:id])
 		if @user.update(user_params)
             redirect_to root_path, success: "Updated successfully" 
         else
@@ -33,53 +34,62 @@ before_action :load_user, only: [:update, :activate, :activate_show, :destroy]
         end
 	end
 
-	def index
+	def index 
 		if current_user.admin?
-			@user = User.all.order("admin DESC" ,"register_number")
+			@user = User.all.order("admin DESC" ,"register_number") 
 		else
-			redirect_to root_path
+			@user = User.all.where(active: true)
 		end
 	end
 
-	def destroy
-		if User.where(admin: true).count(:admin)>1
-			#@user = User.find_by(id: params[:id])
-			@user.destroy
-        	redirect_to users_path, success: "Deleted successfully"
-        else
-        	redirect_to users_path, danger: "Atleast 1 admin must be present"
-        end
+	def destroy 
+		if @user.destroy
+			redirect_to users_path, success: "Deleted successfully"
+		else
+			redirect_to users_path, danger: @user.errors.messages.values.join('\n')
+		end
 	end
 
-	def activate
-		@user.update_attribute(:active, !@user.active)
-		redirect_to users_path
-	end
-
-	def promote
-		promote_revoke
-		redirect_to users_path
-	end
-
-	def activate_show
+	def toggle_activation
 		@user.update_attribute(:active, !@user.active)
 		redirect_to user_path
 	end
 
-	def promote_show
-		promote_revoke
+	def toggle_promotion
+		if @user.admin?
+			@user.update_attribute(:admin, false)
+		else
+			@user.update({admin: true, active: true})
+		end
 		redirect_to user_path
+	end
+
+	def toggle_follow
+		if @follow_check = Relationship.find_by(following_id: params[:id], follower_id: current_user.id)
+			@follow_check.destroy
+		else
+			Relationship.create(following_id: params[:id], follower_id: current_user.id)
+		end
+		redirect_to user_path(params[:id])
 	end
 
 	def show
-		if current_user.admin?
-			load_user
+		if @user.present?
+			@following =  @user.followings
+			@follower =  @user.followers
 		else
-			redirect_to root_path
+			redirect_to root_path, danger: "Invalid Operation"
 		end
 	end
 
-
+	def profile_view
+		if  current_user.id == params[:id].to_i
+			@following =  @user.followings
+			@follower =  @user.followers
+		else
+			redirect_to root_path, danger: "Invalid Operation"
+		end
+	end
 
 
 	private
@@ -91,21 +101,4 @@ before_action :load_user, only: [:update, :activate, :activate_show, :destroy]
 	def load_user
 		@user = User.find_by(id: params[:id])
 	end
-
-
-	def promote_revoke
-		@user = User.find_by(id: params[:id])
-		if @user.admin == false
-			@user.admin = true
-			@user.active = true
-		else
-			@user.admin = false 
-		end
-		@user.save
-	end
-
-
-
-
-
 end

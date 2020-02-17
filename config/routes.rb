@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
 
-
-
   resources :users do
     member do
-      post 'activate'
-      post 'promote'
-      post 'activate_show'
-      post 'promote_show'
+      post 'toggle_activation'
+      post 'toggle_promotion'
+      post 'toggle_follow'
+      get 'profile_view' 
     end
     collection do
 
     end
   end
+
+  resources :questions do 
+  resources :answers 
+end
+  post 'answers/:id/like' => 'answers#toggle_like', :as => :answer_toggle_like
   root 'page#home'
   
   get 'login' => 'sessions#new'

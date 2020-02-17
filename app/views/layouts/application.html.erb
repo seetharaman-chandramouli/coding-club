@@ -2,43 +2,26 @@
 <html>
 <head>
   <title>CodingClub</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+
+  
 </head>
-<style>
-li {
-  display: inline;
-  padding: 60px;
-}
-</style>
+
 <body>
-<%flash.each do |key,value|%>
-	<div class='alert alert-<%= key %>'>
-		<%=value%>
-	</div>
-<%end%>
-<ul>
-<li>BROGRAMMERS</li>
-<% if current_user && current_user.active %>
-	<li><%= "#{current_user.title}:" " #{current_user.full_name}" %>!</li>
-	<li><%= link_to 'Home', root_path %></li>
-	<li><%= link_to 'Manage users', users_path if current_user.admin? %></li>
-	<li><%= link_to 'Blogs'  %></li>
-	<li><%= link_to 'Profile', edit_user_path(current_user.id)%></li>
-	<li><%= link_to 'Logout', logout_path, method: :delete %></li>
-<% else %>
-	<li><%= link_to 'Home', root_path %></li>
-	<li><%= link_to 'Login', login_path%></li> 
-	<li><%= link_to 'Sign up now',new_user_path %></li>
-<% end %>
-</ul>
+
+
+<%= render 'layouts/headernav'%>
+<%= render 'layouts/flash'%>
 
 <%= yield %>
 
+<%= render 'layouts/footer'%>
 </body>
+
 <script type="text/javascript">
   $(document).ready(function(){
     setTimeout(function(){

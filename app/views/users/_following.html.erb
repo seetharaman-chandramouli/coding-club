@@ -1,0 +1,21 @@
+<br>
+<% if @following.present? %>
+<h3>Followings : <%= @following.count %></h3>
+<table  class="table table-borderless"> 
+  <thead class="thead-dark">
+    <tr>   
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @following.each do |following| %>
+      <tr>  
+        <td><%= following.full_name %></td>
+       </tr>
+   	<% end %>
+  </tbody>
+</table>
+<% end %>
+<br>
+
+
