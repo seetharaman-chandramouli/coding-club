@@ -1,4 +1,8 @@
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 form { 
 	margin-left: 33%;
 	width:900px;
@@ -20,12 +24,25 @@ form {
 	color: yellow;
 	text-decoration: none;
 }
+.pull-right{
+	margin-left: 50%;
+	li{
+		display: inline-block;
+	}
+}
+.navbar{
+	border-bottom: 1px solid yellow;
+}
 .navbar-nav{
+	
+	width: 100%;
 	line-height: 40px;
 	li{
 	margin-left: 60px; 
 	}
+
 }
+
 .img-align{
 	margin-top: 21%;
 }

@@ -45,8 +45,7 @@ class AnswersController < ApplicationController
 	end
 
 	def toggle_like
-		voted = @answer.voters.include?(current_user)
-		if voted
+		if @answer.voted?(current_user)
 			@answer.answervotes.find_by(user_id: current_user.id).destroy
 		else
 			@answer.answervotes.create(user_id: current_user.id)

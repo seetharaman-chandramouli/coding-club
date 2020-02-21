@@ -4,7 +4,7 @@ skip_before_action :verify_logged_in, only: [:new, :create]
 before_action :load_user, only: [:update, :toggle_activation, :destroy, :toggle_promotion, :show, :profile_view]
 
 	def new
-		@user = User.new
+		@user = User.new 
 	end
 
 	def create
@@ -36,18 +36,30 @@ before_action :load_user, only: [:update, :toggle_activation, :destroy, :toggle_
 
 	def index 
 		if current_user.admin?
-			@user = User.all.order("admin DESC" ,"register_number") 
+			@user = User.unscoped.all.order("admin DESC" ,"register_number")
 		else
 			@user = User.all.where(active: true)
 		end
 	end
 
 	def destroy 
-		if @user.destroy
+		if @user.update_attribute(:deleted, true)
+			UserDeleteWorker.perform_at(30.seconds.from_now, @user.id)
 			redirect_to users_path, success: "Deleted successfully"
 		else
 			redirect_to users_path, danger: @user.errors.messages.values.join('\n')
 		end
+		# if @user.destroy
+		# 	redirect_to users_path, success: "Deleted successfully"
+		# else
+		# 	redirect_to users_path, danger: @user.errors.messages.values.join('\n')
+		# end
+	end
+
+	def restore
+		@user = User.unscoped.find_by(id: params[:id])
+		@user.update_attribute(:deleted, false)
+		redirect_to users_path, success: "Restored successfully"
 	end
 
 	def toggle_activation

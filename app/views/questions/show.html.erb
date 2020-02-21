@@ -23,13 +23,13 @@
 
         <td><%= s_no %></td><%s_no+=1%>
         <td><%= answer.answer %></td>
-        <td><%= answer.user.full_name %></td>
+        <td><%= link_to "#{answer.user.full_name}", user_path(answer.user_id), class: "no-decoration" %></td>
         <% if answer.author?(current_user)   %>
             <td><%= link_to 'Update', edit_question_answer_path(@question.id,answer.id), class:"btn btn-warning"%></td>
             <td><%= link_to 'Delete', question_answer_path(@question.id,answer.id), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% else %>
-            <td>-</td>
-            <td>-</td>
+            <td></td>
+            <td></td>
         <% end %>
         <% if answer.voted?(current_user) %>
           <td><%= link_to 'Unlike', answer_toggle_like_path(answer.id), class:"btn btn-light", method: :post %>
@@ -46,4 +46,4 @@
 <br>
 <% end %>
 <%= link_to 'post answer', new_question_answer_path(@question.id), class:"btn btn-warning"%><br>
-<%= link_to 'Back', questions_path, class:"btn btn-light"%>
+

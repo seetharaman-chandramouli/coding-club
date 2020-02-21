@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'toggle_promotion'
       post 'toggle_follow'
       get 'profile_view' 
+      post 'restore'
     end
     collection do
 

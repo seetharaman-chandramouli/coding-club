@@ -1,9 +1,19 @@
 <div class="row">
 	<div class="col-sm-12">
 		<%= form_for(@user)  do |f| %>
+
+			<% if @user.errors.any? %>
+			<h3>Errors</h3>
+			<ul>
+			  <% @user.errors.full_messages.each do |msg| %>
+			    <li><%= msg %></li>
+			  <% end %>
+			</ul>
+			<% end %>
+
 			<div class="form-group">
 				<div class="control-label col-sm-2">
-					<%= f.label :first_name %>
+					<%= f.label :first_name%>
 				</div>
 				<div class="col-sm-8">
 					<%= f.text_field :first_name, class: "form-control", placeholder: "Enter Firstname", autofocus: true %>
@@ -22,7 +32,7 @@
 					<%= f.label :mobile_number %>
 				</div>
 				<div class="col-sm-8">
-					<%= f.text_field :mobile_number, class: "form-control", placeholder: "Enter mobilenumber", autofocus: true %>
+					<%= f.number_field :mobile_number, class: "form-control", placeholder: "Enter mobilenumber", autofocus: true %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -30,7 +40,7 @@
 					<%= f.label :age %>
 				</div>
 				<div class="col-sm-8">
-					<%= f.text_field :age, class: "form-control", placeholder: "Enter age", autofocus: true %>
+					<%= f.number_field :age, class: "form-control", placeholder: "Enter age", autofocus: true %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -62,7 +72,7 @@
 					<%= f.label :register_number %>
 				</div>
 				<div class="col-sm-8">
-					<%= f.text_field :register_number, class: "form-control", placeholder: "Enter register number", autofocus: true %>
+					<%= f.number_field :register_number, class: "form-control", placeholder: "Enter register number", autofocus: true %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -89,13 +99,14 @@
 					<%= f.text_field :location, class: "form-control", placeholder: "Enter location", autofocus: true %>
 				</div>
 			</div>
+			
 			<div class="form-group">
 				<div class="control-label col-sm-2">
 					<%= f.label :email%>
 				</div>
-				<div class="col-sm-8">
-					<%= f.email_field :email,class:"form-control",placeholder: "Enter email" %>
-				</div>
+					<div class="col-sm-8">
+						<%= f.email_field :email,class:"form-control",placeholder: "Enter email"  %>
+					</div>
 			</div>
 			<div class="form-group">
 				<div class="control-label col-sm-2">
@@ -114,3 +125,33 @@
 		<%end%>
 	</div>
 </div>
+<script>
+var phone = $("input#user_mobile_number").val();
+    if (phone !== "" && !$.isNumeric(phone)) {
+  //Check if phone is numeric
+  $("label#phone_error").show(); //Show error
+  $("input#phone").focus(); //Focus on field
+  return false;
+}
+var reg_num = $("input#user_register_number").val();
+    if (reg_num !== "" && !$.isNumeric(reg_num)) {
+  //Check if phone is numeric
+  $("label#phone_error").show(); //Show error
+  $("input#phone").focus(); //Focus on field
+  return false;
+}
+var reg_num = $("input#user_register_number").val();
+    if (reg_num !== "" && !$.isNumeric(reg_num)) {
+  //Check if phone is numeric
+  $("label#phone_error").show(); //Show error
+  $("input#phone").focus(); //Focus on field
+  return false;
+}
+var age = $("input#user_age").val();
+    if (age !== "" && !$.isNumeric(age)) {
+  //Check if phone is numeric
+  $("label#phone_error").show(); //Show error
+  $("input#phone").focus(); //Focus on field
+  return false;
+}
+</script>

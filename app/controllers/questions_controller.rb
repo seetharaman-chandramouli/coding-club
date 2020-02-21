@@ -1,9 +1,18 @@
 class QuestionsController < ApplicationController
 
-	before_action :load_question, only: [:edit, :update, :destroy, :show]
+	before_action :load_question, only: [:index, :edit, :update, :destroy, :show]
 
 	def index
-		@question = Question.all.includes(:user).order("created_at DESC") 	
+			followers_user_id = current_user.followings.order("first_name, last_name").map(&:id)
+			@question = Question.joins(:user).includes(:user)
+			all_user_id = @question.order("users.first_name, users.last_name").map(&:user_id)
+			order_users = followers_user_id | all_user_id
+			@question = @question.order("FIELD(user_id, #{order_users.join(',')})")
+		unless Question.all.present?
+			flash[:danger] = "No Questions to load add a new one"
+			@question = Question.new
+			render :new
+		end
 	end
 
 	def new
@@ -37,7 +46,7 @@ class QuestionsController < ApplicationController
 	def show
 		# @answer = Answer.order("vote_count DESC").where("ques_id = ?", params[:id])
 		if @question.present?
-			@answer = @question.answers.includes(:user, :voters).order("vote_count DESC")
+			@answer = @question.answers.joins(:user).includes(:user, :voters).order("vote_count DESC")
 		else
 			redirect_to questions_path, danger: "Invalid operation"
 		end

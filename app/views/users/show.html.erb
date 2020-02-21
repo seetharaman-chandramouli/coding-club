@@ -1,16 +1,18 @@
 <div class="float-left">
-<h2><b>First name</b> : <%= @user.first_name %></h2>
-<h2><b>Last name</b> : <%= @user.last_name %></h2>
-<h2><b>Mobile number</b> : <%= @user.mobile_number %></h2>
-<h2><b>Age</b> : <%= @user.age %></h2>
-<h2><b>Batch</b> : <%= @user.batch %></h2>
-<h2><b>Degree</b> : <%= @user.degree %></h2>
-<h2><b>College name</b> : <%= @user.college_name %></h2>
-<h2><b>Register number</b> : <%= @user.register_number %></h2>
-<h2><b>Company name</b> : <%= @user.company_name %></h2>
-<h2><b>Designation</b> : <%= @user.designation %></h2>
-<h2><b>Location</b> : <%= @user.location %></h2>
-<h2><b>Email</b> : <%= @user.email %></h2>
+<table class="table table-borderless">
+<tr><td><b>First name</b> </td><td> <%= @user.first_name %></td></tr>
+<tr><td><b>Last name</b> </td><td> <%= @user.last_name %></td></tr>
+<tr><td><b>Mobile number</b> </td><td> <%= @user.mobile_number %></td></tr>
+<tr><td><b>Age</b> </td><td> <%= @user.age %></td></tr>
+<tr><td><b>Batch</b> </td><td> <%= @user.batch %></td></tr>
+<tr><td><b>Degree</b> </td><td> <%= @user.degree %></td></tr>
+<tr><td><b>College name</b> </td><td>  <%= @user.college_name %></td></tr>
+<tr><td><b>Register number</b> </td><td> <%= @user.register_number %></td></tr>
+<tr><td><b>Company name</b> </td><td> <%= @user.company_name %></td></tr>
+<tr><td><b>Designation</b> </td><td> <%= @user.designation %></td></tr>
+<tr><td><b>Location</b> </td><td> <%= @user.location %></td></tr>
+<tr><td><b>Email</b> </td><td> <%= @user.email %></td></tr>
+</table>
 
 <% if current_user.admin? %>
 
@@ -37,7 +39,7 @@
 	<% end %>
 <% end %>
 
-<h3><%= link_to 'Back', users_path, class:"btn btn-light" %></h3>
+
 
 </div>
 </div>

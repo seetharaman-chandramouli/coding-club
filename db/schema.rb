@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200212123901) do
+ActiveRecord::Schema.define(version: 20200218115652) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "ques_id",    limit: 4
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20200212123901) do
     t.string  "password_digest", limit: 255,                 null: false
     t.boolean "active",                      default: false
     t.boolean "admin",                       default: false
+    t.boolean "deleted",                     default: false
   end
 
 end

@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
 
-	before_destroy :check_admins_present, if: -> { self.admin? }
 	has_many :following_relations, class_name: "Relationship" , foreign_key: "following_id", dependent: :destroy
 	has_many :follower_relations, class_name: "Relationship" ,foreign_key: "follower_id", dependent: :destroy
 	has_many :followings, through: :follower_relations
@@ -8,7 +7,10 @@ class User < ActiveRecord::Base
 	has_many :questions, dependent: :destroy
 	has_many :answers, dependent: :destroy
 	has_many :answervotes
+
+	before_update :check_admins_present, if: -> { self.admin? && self.deleted_changed? }
 	scope :admin_count, -> { where(admin: true).count(:admin) }
+	default_scope { where(:deleted => false) }
 	validates :email, :presence => true, :uniqueness => true, format: { with: URI::MailTo::EMAIL_REGEXP }
 	validates :first_name, :presence => true
 	validates :last_name, :presence => true
@@ -21,7 +23,7 @@ class User < ActiveRecord::Base
 	validates :company_name, :presence => true
 	validates :designation, :presence => true
 	validates :location, :presence => true
-	has_secure_password
+	has_secure_password 
 
 	def full_name
 		"#{first_name} #{last_name}"
@@ -36,7 +38,7 @@ class User < ActiveRecord::Base
 	end
 
 	def check_admins_present
-		self.errors.add(:base, "Atleast 1 admin must be present") and return false if User.admin_count == 1
+		self.errors.add(:base, "Atleast 1 admin must be present") and return false if self.changes["deleted"] == [false, true] && User.admin_count == 1
 	end
 
 	

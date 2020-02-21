@@ -48,7 +48,11 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  password:
   database: coding-club_production
   username: coding-club
   password: <%= ENV['CODING-CLUB_DATABASE_PASSWORD'] %>
