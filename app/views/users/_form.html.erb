@@ -55,8 +55,8 @@
 				<div class="control-label col-sm-2">
 					<%= f.label :degree %>
 				</div>
-				<div class="col-sm-8">
-					<%= f.text_field :degree, class: "form-control", placeholder: "Enter degree", autofocus: true %>
+				<div class="col-sm-8 ">
+					<%= f.select(:degree, ['B.Tech - IT'], {}, { :class => 'form-control' }) %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -64,7 +64,7 @@
 					<%= f.label :collegename %>
 				</div>
 				<div class="col-sm-8">
-					<%= f.text_field :college_name, class: "form-control", placeholder: "Enter college name", autofocus: true %>
+					<%= f.select(:college_name, ["St.Joseph's Institute of Technology"], {}, { :class => 'form-control' }) %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -72,7 +72,7 @@
 					<%= f.label :register_number %>
 				</div>
 				<div class="col-sm-8">
-					<%= f.number_field :register_number, class: "form-control", placeholder: "Enter register number", autofocus: true %>
+					<%= f.number_field :register_number, :readonly => f.object.persisted?, class: "form-control", placeholder: "Enter register number", autofocus: true %>
 				</div>
 			</div>
 			<div class="form-group">
@@ -105,7 +105,7 @@
 					<%= f.label :email%>
 				</div>
 					<div class="col-sm-8">
-						<%= f.email_field :email,class:"form-control",placeholder: "Enter email"  %>
+						<%= f.email_field :email, :readonly => f.object.persisted?,class:"form-control",placeholder: "Enter email"  %>
 					</div>
 			</div>
 			<div class="form-group">
@@ -154,4 +154,5 @@ var age = $("input#user_age").val();
   $("input#phone").focus(); //Focus on field
   return false;
 }
+
 </script>
