@@ -3,13 +3,17 @@
 		<%= form_for(@user)  do |f| %>
 
 			<% if @user.errors.any? %>
-			<h3>Errors</h3>
-			<ul>
-			  <% @user.errors.full_messages.each do |msg| %>
-			    <li><%= msg %></li>
-			  <% end %>
-			</ul>
+			<div class = "error-red">
+				<span class="close-error">x</span>
+				<h3>Errors</h3>
+				<ul>
+				  <% @user.errors.full_messages.each do |msg| %>
+				    <li><%= msg %></li>
+				  <% end %>
+				</ul>
+				</div>
 			<% end %>
+			
 
 			<div class="form-group">
 				<div class="control-label col-sm-2">
@@ -131,28 +135,31 @@ var phone = $("input#user_mobile_number").val();
   //Check if phone is numeric
   $("label#phone_error").show(); //Show error
   $("input#phone").focus(); //Focus on field
-  return false;
+  //return false;
 }
 var reg_num = $("input#user_register_number").val();
     if (reg_num !== "" && !$.isNumeric(reg_num)) {
   //Check if phone is numeric
   $("label#phone_error").show(); //Show error
   $("input#phone").focus(); //Focus on field
-  return false;
+  //return false;
 }
 var reg_num = $("input#user_register_number").val();
     if (reg_num !== "" && !$.isNumeric(reg_num)) {
   //Check if phone is numeric
   $("label#phone_error").show(); //Show error
   $("input#phone").focus(); //Focus on field
-  return false;
+  //return false;
 }
 var age = $("input#user_age").val();
     if (age !== "" && !$.isNumeric(age)) {
   //Check if phone is numeric
   $("label#phone_error").show(); //Show error
   $("input#phone").focus(); //Focus on field
-  return false;
+  //return false;
 }
+$(".close-error").click(function(){
+  $(".error-red").animate({opacity:0}, 500);
+});
 
 </script>

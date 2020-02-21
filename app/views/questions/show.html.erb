@@ -1,4 +1,4 @@
-
+ 
 <h2 style="text-align: center;"> ANSWERS </h2>
 <b>Question : </b><%= @question.question %><br>
 <b>Question created by :</b> <%= @question.user.full_name %><br><br>
@@ -35,6 +35,7 @@
           <td><%= link_to 'Unlike', answer_toggle_like_path(answer.id), class:"btn btn-light", method: :post %>
           </td>
         <% else %>
+        
           <td><%= link_to 'Like', answer_toggle_like_path(answer.id), class:"btn btn-dark", method: :post %></td>
         <% end %>
         

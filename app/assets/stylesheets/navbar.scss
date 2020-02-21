@@ -3,10 +3,12 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 form { 
 	margin-left: 33%;
 	width:900px;
-};
+}
+
 .field_with_errors{
 	input{
 		border-color: red;
@@ -25,7 +27,8 @@ form {
 	text-decoration: none;
 }
 .pull-right{
-	margin-left: 50%;
+	position: absolute;
+    right: 31px;
 	li{
 		display: inline-block;
 	}
@@ -41,6 +44,26 @@ form {
 	margin-left: 60px; 
 	}
 
+}
+.error-red{
+	margin-top: 50px;
+    position: fixed;
+    right: 20px;
+    z-index: 123;
+    box-shadow: 2px 4px 4px red;
+    border: 1px solid #6f4e4e;
+    padding: 5px;
+    ul{
+    	list-style: none;
+
+    }
+}
+.close-error{
+	position: absolute;
+    right: 10px;
+   &:hover{
+   		background: grey;
+   }
 }
 
 .img-align{

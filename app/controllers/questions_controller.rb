@@ -46,7 +46,7 @@ class QuestionsController < ApplicationController
 	def show
 		# @answer = Answer.order("vote_count DESC").where("ques_id = ?", params[:id])
 		if @question.present?
-			@answer = @question.answers.joins(:user).includes(:user, :voters).order("vote_count DESC")
+			@answer = @question.answers.joins(:user).includes(:voters).order("vote_count DESC")
 		else
 			redirect_to questions_path, danger: "Invalid operation"
 		end
