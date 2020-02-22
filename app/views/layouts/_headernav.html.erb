@@ -1,5 +1,8 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	<div class="navbar-brand"><%= link_to 'BROGRAMMERS', root_path , class: "nav-color"%></div>
+	<a class="navbar-brand" href="http://www.stjosephstechnology.ac.in/web/index.html" target="_blank">
+		<%= image_tag("sjit-logo.png", width: '63', height:'65', class:'d-inline-block align-top') %>
+    <%= link_to 'BROGRAMMERS', root_path , class: "nav-color"%>
+  </a>
 <ul class="navbar-nav">
 <% if current_user && current_user.active %>
 	<li class="nav-item"><div class="nav-link"><%= link_to 'Users', users_path, class: "nav-color"%></div></li>
@@ -12,6 +15,9 @@
 <% else %>
 	<li class="nav-item"><div class="nav-link"><%= link_to 'Login', login_path, class: "nav-color"%></div></li> 
 	<li class="nav-item"><div class="nav-link"><%= link_to 'Sign up now',new_user_path, class: "nav-color" %></div></li>
+	<div class="pull-right">
+		<li class="nav-item"><div class="nav-link"><a href="http://www.stjosephstechnology.ac.in/web/it/index.html" class="nav-color" target="_blank">DEPARTMENT OF INFORMATION TECHNOLOGY</a></div></li> 
+	</div>
 <% end %>
 </ul>
 </nav>
