@@ -10,7 +10,7 @@
   <tbody>
     <% @following.each do |following| %>
       <tr>  
-        <td><%= following.full_name %></td>
+        <td><%= link_to "#{following.full_name}", user_path(following.id), class: "no-decoration" %></td>
        </tr>
    	<% end %>
   </tbody>

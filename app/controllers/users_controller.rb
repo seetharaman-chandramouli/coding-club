@@ -44,7 +44,7 @@ before_action :load_user, only: [:update, :toggle_activation, :destroy, :toggle_
 
 	def destroy 
 		if @user.update_attribute(:deleted, true)
-			UserDeleteWorker.perform_at(30.seconds.from_now, @user.id)
+			UserDeleteWorker.perform_at(15.minutes.from_now, @user.id)
 			redirect_to users_path, success: "Deleted successfully"
 		else
 			redirect_to users_path, danger: @user.errors.messages.values.join('\n')
