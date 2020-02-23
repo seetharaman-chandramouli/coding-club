@@ -20,9 +20,6 @@ class User < ActiveRecord::Base
 	validates :degree, :presence => true
 	validates :college_name, :presence => true
 	validates :register_number, :presence => true, :uniqueness => true
-	validates :company_name, :presence => true
-	validates :designation, :presence => true
-	validates :location, :presence => true
 	has_secure_password 
 
 	def full_name
