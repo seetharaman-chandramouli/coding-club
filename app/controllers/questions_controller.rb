@@ -4,11 +4,12 @@ class QuestionsController < ApplicationController
 
 	def index
 		if Question.all.present?
-			followers_user_id = current_user.followings.order("first_name, last_name").map(&:id)
-			@question = Question.joins(:user).includes(:user)
-			all_user_id = @question.order("users.first_name, users.last_name").map(&:user_id)
-			order_users = followers_user_id | all_user_id
-			@question = @question.order("FIELD(user_id, #{order_users.join(',')})")
+			@question = Question.all
+			# followers_user_id = current_user.followings.order("first_name, last_name").map(&:id)
+			# @question = Question.joins(:user).includes(:user)
+			# all_user_id = @question.order("users.first_name, users.last_name").map(&:user_id)
+			# order_users = followers_user_id | all_user_id
+			# @question = @question.order("FIELD(user_id, #{order_users.join(',')})")
 		else
 			flash[:danger] = "No Questions to load add a new one"
 			@question = Question.new
