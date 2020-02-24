@@ -1,8 +1,7 @@
 <h2 style="text-align: center;"> QUESTIONS </h2>
-<% if @question.present? %>
- seetha
+<% @question.each do |question|%>
+<%= question.question%>
 <% end %>
-
 
 
 
