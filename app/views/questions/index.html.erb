@@ -1,18 +1,5 @@
 <h2 style="text-align: center;"> QUESTIONS </h2>
 
-
-      <% s_no=1%>
-      <% @question.each do |question| %>
-        <%= s_no %>
-          <%= link_to "#{question.question}" , question_path(question.id), class: "no-decoration" %>
-          <%= link_to "#{question.user.full_name}", user_path(question.user_id), class: "no-decoration" %>
-          <% if question.author?(current_user) %>
-            <%= link_to 'Update', edit_question_path(question.id), class:"btn btn-warning"%>
-            <%= link_to 'Delete', question_path(question.id), class:"btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+<% @question.question %>
      
-            
-          <% end %>
-   
-      <% end %>
-
   <h3><%= link_to 'New', new_question_path, class:"btn btn-warning" %></h3>
